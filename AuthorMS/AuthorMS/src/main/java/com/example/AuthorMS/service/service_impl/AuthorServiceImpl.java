@@ -20,5 +20,19 @@ public class AuthorServiceImpl implements AuthorService {
         Author author=new Author();
 
         author.setAge(authorRequest.getAge());
+        author.setName(authorRequest.getName());
+        author.setEmailId(authorRequest.getEmailId());
+        author.setTotal_books(author.getTotal_books());
+        author.setRating(author.getRating());
+
+        Author savedAuthor=authorRepository.save(author);
+
+        return AuthorResponse.builder()
+                .age(savedAuthor.getAge())
+                .emailId(savedAuthor.getEmailId())
+                .name(savedAuthor.getName())
+                .rating(savedAuthor.getRating())
+                .total_books(savedAuthor.getTotal_books())
+                .build();
     }
 }
