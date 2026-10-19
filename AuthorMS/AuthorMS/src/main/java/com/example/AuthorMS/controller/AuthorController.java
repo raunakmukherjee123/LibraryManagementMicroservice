@@ -7,17 +7,21 @@ import com.example.AuthorMS.service.AuthorService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.time.Instant;
 
 @RestController
 @RequiredArgsConstructor
+@RequestMapping("/api/author")
 public class AuthorController {
 
     private final AuthorService authorService;
 
+    @PostMapping("/add")
     public ResponseEntity<?> addAuthor(@RequestBody AuthorRequest authorRequest)
     {
         AuthorResponse authorResponse=authorService.add(authorRequest);
@@ -33,4 +37,6 @@ public class AuthorController {
 
         return new ResponseEntity<>(apiResponse,HttpStatus.CREATED);
     }
+
+    public ResponseEntity<?> getAuthorById("")
 }
