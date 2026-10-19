@@ -5,4 +5,6 @@ import com.example.AuthorMS.dto.response.AuthorResponse;
 
 public interface AuthorService {
     AuthorResponse add(AuthorRequest authorRequest);
+
+    AuthorResponse findById(Integer id);
 }

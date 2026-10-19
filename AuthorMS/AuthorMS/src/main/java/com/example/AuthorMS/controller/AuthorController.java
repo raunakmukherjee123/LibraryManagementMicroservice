@@ -7,10 +7,7 @@ import com.example.AuthorMS.service.AuthorService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.time.Instant;
 
@@ -38,5 +35,21 @@ public class AuthorController {
         return new ResponseEntity<>(apiResponse,HttpStatus.CREATED);
     }
 
-    public ResponseEntity<?> getAuthorById("")
+    @GetMapping("/{id}")
+    public ResponseEntity<?> getAuthorById(@PathVariable("id") Integer id)
+    {
+      AuthorResponse authorResponse=authorService.findById(id);
+
+        APIResponse apiResponse=APIResponse.builder()
+                .code(HttpStatus.CREATED)
+                .status(HttpStatus.CREATED.value())
+                .message("Author has been added")
+                .data(authorResponse)
+                .success(true)
+                .timestamp(Instant.now())
+                .build();
+
+        return new ResponseEntity<>(apiResponse,HttpStatus.OK);
+    }
+
 }

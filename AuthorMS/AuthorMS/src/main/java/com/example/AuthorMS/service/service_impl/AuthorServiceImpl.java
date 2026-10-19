@@ -35,4 +35,18 @@ public class AuthorServiceImpl implements AuthorService {
                 .total_books(savedAuthor.getTotal_books())
                 .build();
     }
+
+    @Override
+    public AuthorResponse findById(Integer id) {
+        Author author=authorRepository.findById(id)
+                .orElseThrow(()->new RuntimeException("No author found"));
+
+        return AuthorResponse.builder()
+                .total_books(author.getTotal_books())
+                .age(author.getAge())
+                .rating(author.getRating())
+                .name(author.getName())
+                .emailId(author.getEmailId())
+                .build();
+    }
 }
