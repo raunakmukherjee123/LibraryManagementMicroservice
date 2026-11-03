@@ -2,6 +2,7 @@ package com.example.AuthorMS.service.service_impl;
 
 import com.example.AuthorMS.dto.request.AuthorRequest;
 import com.example.AuthorMS.dto.response.AuthorResponse;
+import com.example.AuthorMS.exception_handling.AuthorNotFoundException;
 import com.example.AuthorMS.models.Author;
 import com.example.AuthorMS.repository.AuthorRepository;
 import com.example.AuthorMS.service.AuthorService;
@@ -39,7 +40,7 @@ public class AuthorServiceImpl implements AuthorService {
     @Override
     public AuthorResponse findById(Integer id) {
         Author author=authorRepository.findById(id)
-                .orElseThrow(()->new RuntimeException("No author found"));
+                .orElseThrow(()->new AuthorNotFoundException("No author found"));
 
         return AuthorResponse.builder()
                 .total_books(author.getTotal_books())
