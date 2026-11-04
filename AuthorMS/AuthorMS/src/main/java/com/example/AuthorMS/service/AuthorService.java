@@ -7,4 +7,6 @@ public interface AuthorService {
     AuthorResponse add(AuthorRequest authorRequest);
 
     AuthorResponse findById(Integer id);
+
+    void deleteAuthorById(Integer id);
 }

@@ -52,4 +52,20 @@ public class AuthorController {
         return new ResponseEntity<>(apiResponse,HttpStatus.OK);
     }
 
+    @DeleteMapping("/{id}")
+    public ResponseEntity<?> deleteAuthorById(@PathVariable("id") Integer id)
+    {
+        authorService.deleteAuthorById(id);
+
+        APIResponse apiResponse=APIResponse.builder()
+                .timestamp(Instant.now())
+                .success(true)
+                .code(HttpStatus.OK)
+                .status(HttpStatus.OK.value())
+                .message("Author of id = "+id+" has been deleted from database")
+                .build();
+
+        return new ResponseEntity<>(apiResponse,HttpStatus.OK);
+    }
+
 }
