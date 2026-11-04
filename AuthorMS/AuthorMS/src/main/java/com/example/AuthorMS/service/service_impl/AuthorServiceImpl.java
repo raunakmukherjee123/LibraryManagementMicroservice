@@ -52,10 +52,17 @@ public class AuthorServiceImpl implements AuthorService {
     }
 
     @Override
-    public void deleteAuthorById(Integer id) {
+    public AuthorResponse deleteAuthorById(Integer id) {
         Author author=authorRepository.findById(id)
                 .orElseThrow(()->new AuthorNotFoundException("No author of id= "+id+" found to be deleted"));
 
         authorRepository.delete(author);
+
+        AuthorResponse authorResponse=AuthorResponse.builder()
+                .name(author.getName())
+                .age(author.getAge())
+                .build();
+
+        return authorResponse;
     }
 }

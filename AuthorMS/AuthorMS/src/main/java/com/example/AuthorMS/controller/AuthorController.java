@@ -55,7 +55,7 @@ public class AuthorController {
     @DeleteMapping("/{id}")
     public ResponseEntity<?> deleteAuthorById(@PathVariable("id") Integer id)
     {
-        authorService.deleteAuthorById(id);
+        AuthorResponse authorResponse=authorService.deleteAuthorById(id);
 
         APIResponse apiResponse=APIResponse.builder()
                 .timestamp(Instant.now())

@@ -8,5 +8,5 @@ public interface AuthorService {
 
     AuthorResponse findById(Integer id);
 
-    void deleteAuthorById(Integer id);
+    AuthorResponse deleteAuthorById(Integer id);
 }
