@@ -1,6 +1,7 @@
 package com.example.AuthorMS.controller;
 
 import com.example.AuthorMS.dto.request.AuthorRequest;
+import com.example.AuthorMS.dto.request.AuthorUpdate;
 import com.example.AuthorMS.dto.response.APIResponse;
 import com.example.AuthorMS.dto.response.AuthorResponse;
 import com.example.AuthorMS.service.AuthorService;
@@ -68,4 +69,9 @@ public class AuthorController {
         return new ResponseEntity<>(apiResponse,HttpStatus.OK);
     }
 
+    @PutMapping("/update/{id}")
+    public ResponseEntity<?> updateUserById(@RequestBody AuthorUpdate authorUpdate,@PathVariable("id") Integer id)
+    {
+
+    }
 }
