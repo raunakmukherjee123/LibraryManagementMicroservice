@@ -68,7 +68,7 @@ public class AuthorServiceImpl implements AuthorService {
     }
 
     @Override
-    public void updateById(AuthorUpdate authorUpdate, Integer id) {
+    public AuthorResponse updateById(AuthorUpdate authorUpdate, Integer id) {
         Author author=authorRepository.findById(id)
                 .orElseThrow(()->new AuthorNotFoundException("Author of id = "+id+" not found to be updated"));
 
@@ -77,6 +77,16 @@ public class AuthorServiceImpl implements AuthorService {
       author.setRating(authorUpdate.getRating());
       author.setTotal_books(authorUpdate.getTotal_books());
 
-      authorRepository.save(author);
+      Author savedAuthor=authorRepository.save(author);
+
+      AuthorResponse authorResponse=AuthorResponse.builder()
+              .age(savedAuthor.getAge())
+              .name(savedAuthor.getName())
+              .emailId(savedAuthor.getEmailId())
+              .rating(savedAuthor.getRating())
+              .total_books(savedAuthor.getTotal_books())
+              .build();
+
+      return authorResponse;
     }
 }
