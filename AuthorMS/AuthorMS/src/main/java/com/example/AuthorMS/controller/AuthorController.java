@@ -72,6 +72,16 @@ public class AuthorController {
     @PutMapping("/update/{id}")
     public ResponseEntity<?> updateUserById(@RequestBody AuthorUpdate authorUpdate,@PathVariable("id") Integer id)
     {
+        authorService.updateById(authorUpdate,id);
 
+        APIResponse apiResponse=APIResponse.builder()
+                .timestamp(Instant.now())
+                .success(true)
+                .code(HttpStatus.OK)
+                .status(HttpStatus.OK.value())
+                .message("Author of id = "+id+" has been updated")
+                .build();
+
+        return new ResponseEntity<>(apiResponse,HttpStatus.OK);
     }
 }

@@ -1,6 +1,7 @@
 package com.example.AuthorMS.service.service_impl;
 
 import com.example.AuthorMS.dto.request.AuthorRequest;
+import com.example.AuthorMS.dto.request.AuthorUpdate;
 import com.example.AuthorMS.dto.response.AuthorResponse;
 import com.example.AuthorMS.exception_handling.AuthorNotFoundException;
 import com.example.AuthorMS.models.Author;
@@ -64,5 +65,18 @@ public class AuthorServiceImpl implements AuthorService {
                 .build();
 
         return authorResponse;
+    }
+
+    @Override
+    public void updateById(AuthorUpdate authorUpdate, Integer id) {
+        Author author=authorRepository.findById(id)
+                .orElseThrow(()->new AuthorNotFoundException("Author of id = "+id+" not found to be updated"));
+
+      author.setAge(authorUpdate.getAge());
+      author.setEmailId(authorUpdate.getEmailId());
+      author.setRating(authorUpdate.getRating());
+      author.setTotal_books(authorUpdate.getTotal_books());
+
+      authorRepository.save(author);
     }
 }
