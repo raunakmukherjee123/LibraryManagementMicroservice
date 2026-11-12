@@ -11,6 +11,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.Instant;
+import java.util.List;
 
 @RestController
 @RequiredArgsConstructor
@@ -29,6 +30,23 @@ public class AuthorController {
                 .status(HttpStatus.CREATED.value())
                 .message("Author has been added")
                 .data(authorResponse)
+                .success(true)
+                .timestamp(Instant.now())
+                .build();
+
+        return new ResponseEntity<>(apiResponse,HttpStatus.CREATED);
+    }
+
+    @GetMapping("/all")
+    public ResponseEntity<?> getAllAuthors()
+    {
+        List<AuthorResponse> responseList=authorService.getAllAuthors();
+
+        APIResponse apiResponse=APIResponse.builder()
+                .code(HttpStatus.CREATED)
+                .status(HttpStatus.CREATED.value())
+                .message("All the authors info")
+                .data(responseList)
                 .success(true)
                 .timestamp(Instant.now())
                 .build();

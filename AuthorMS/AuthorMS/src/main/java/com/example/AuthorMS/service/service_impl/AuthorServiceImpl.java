@@ -10,6 +10,9 @@ import com.example.AuthorMS.service.AuthorService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+import java.util.stream.Collectors;
+
 
 @Service
 @RequiredArgsConstructor
@@ -88,5 +91,27 @@ public class AuthorServiceImpl implements AuthorService {
               .build();
 
       return authorResponse;
+    }
+
+    @Override
+    public List<AuthorResponse> getAllAuthors() {
+        List<Author> authorList=authorRepository.findAll();
+
+        List<AuthorResponse> authorResponseList=authorList.stream().
+                map(author ->
+                   mapToAuthorResponse(author))
+                .collect(Collectors.toList());
+
+        return authorResponseList;
+    }
+
+    private AuthorResponse mapToAuthorResponse(Author author) {
+        return AuthorResponse.builder()
+                .total_books(author.getTotal_books())
+                .rating(author.getRating())
+                .emailId(author.getEmailId())
+                .age(author.getAge())
+                .name(author.getName())
+                .build();
     }
 }
