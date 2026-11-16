@@ -5,8 +5,6 @@ import com.example.AuthorMS.dto.request.AuthorUpdate;
 import com.example.AuthorMS.dto.response.AuthorResponse;
 import com.example.AuthorMS.dto.response.PageResponse;
 
-import java.util.List;
-
 public interface AuthorService {
     AuthorResponse add(AuthorRequest authorRequest);
 
