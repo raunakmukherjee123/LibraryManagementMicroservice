@@ -3,11 +3,16 @@ package com.example.AuthorMS.service.service_impl;
 import com.example.AuthorMS.dto.request.AuthorRequest;
 import com.example.AuthorMS.dto.request.AuthorUpdate;
 import com.example.AuthorMS.dto.response.AuthorResponse;
+import com.example.AuthorMS.dto.response.PageResponse;
 import com.example.AuthorMS.exception_handling.AuthorNotFoundException;
 import com.example.AuthorMS.models.Author;
 import com.example.AuthorMS.repository.AuthorRepository;
 import com.example.AuthorMS.service.AuthorService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -94,15 +99,24 @@ public class AuthorServiceImpl implements AuthorService {
     }
 
     @Override
-    public List<AuthorResponse> getAllAuthors() {
-        List<Author> authorList=authorRepository.findAll();
+    public PageResponse<?> getAllAuthors(int pageNo, int pageSize, String sortBy) {
+        Pageable pageable= PageRequest.of(pageNo,pageSize, Sort.by(sortBy));
+        Page<Author> authorPage=authorRepository.findAll(pageable);
+        List<Author> authorList=authorPage.getContent();
+
 
         List<AuthorResponse> authorResponseList=authorList.stream().
                 map(author ->
                    mapToAuthorResponse(author))
                 .collect(Collectors.toList());
 
-        return authorResponseList;
+        return PageResponse.builder()
+                .content(authorResponseList)
+                .isLastPage(authorPage.isLast())
+                .pageNumber(authorPage.getNumber())
+                .totalPages(authorPage.getTotalPages())
+                .pageSize(authorPage.getSize())
+                .build();
     }
 
     private AuthorResponse mapToAuthorResponse(Author author) {

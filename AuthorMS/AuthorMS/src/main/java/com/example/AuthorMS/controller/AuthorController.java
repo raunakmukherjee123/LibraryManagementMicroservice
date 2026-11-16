@@ -4,6 +4,7 @@ import com.example.AuthorMS.dto.request.AuthorRequest;
 import com.example.AuthorMS.dto.request.AuthorUpdate;
 import com.example.AuthorMS.dto.response.APIResponse;
 import com.example.AuthorMS.dto.response.AuthorResponse;
+import com.example.AuthorMS.dto.response.PageResponse;
 import com.example.AuthorMS.service.AuthorService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -38,15 +39,19 @@ public class AuthorController {
     }
 
     @GetMapping("/all")
-    public ResponseEntity<?> getAllAuthors()
+    public ResponseEntity<?> getAllAuthors(
+            @RequestParam(value = "pageNo",defaultValue = "0",required = false) int pageNo,
+            @RequestParam(value = "pageSize",defaultValue = "10",required = false) int pageSize,
+            @RequestParam(value = "sortBy",defaultValue = "id",required = false) String sortBy
+    )
     {
-        List<AuthorResponse> responseList=authorService.getAllAuthors();
+        PageResponse<?> pageResponse=authorService.getAllAuthors(pageNo,pageSize,sortBy);
 
         APIResponse apiResponse=APIResponse.builder()
                 .code(HttpStatus.CREATED)
                 .status(HttpStatus.CREATED.value())
                 .message("All the authors info")
-                .data(responseList)
+                .data(pageResponse)
                 .success(true)
                 .timestamp(Instant.now())
                 .build();
