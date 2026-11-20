@@ -6,6 +6,7 @@ import com.example.AuthorMS.dto.response.APIResponse;
 import com.example.AuthorMS.dto.response.AuthorResponse;
 import com.example.AuthorMS.dto.response.PageResponse;
 import com.example.AuthorMS.service.AuthorService;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -21,7 +22,7 @@ public class AuthorController {
     private final AuthorService authorService;
 
     @PostMapping("/add")
-    public ResponseEntity<?> addAuthor(@RequestBody AuthorRequest authorRequest)
+    public ResponseEntity<?> addAuthor(@RequestBody @Valid AuthorRequest authorRequest)
     {
         AuthorResponse authorResponse=authorService.add(authorRequest);
 
