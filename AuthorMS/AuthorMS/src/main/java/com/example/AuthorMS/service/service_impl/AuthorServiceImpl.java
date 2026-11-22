@@ -6,6 +6,7 @@ import com.example.AuthorMS.dto.response.AuthorResponse;
 import com.example.AuthorMS.dto.response.PageResponse;
 import com.example.AuthorMS.exception_handling.AuthorNotFoundException;
 import com.example.AuthorMS.models.Author;
+import com.example.AuthorMS.projections.AuthorProjections;
 import com.example.AuthorMS.repository.AuthorRepository;
 import com.example.AuthorMS.service.AuthorService;
 import lombok.RequiredArgsConstructor;
@@ -48,15 +49,18 @@ public class AuthorServiceImpl implements AuthorService {
 
     @Override
     public AuthorResponse findById(Integer id) {
-        Author author=authorRepository.findById(id)
-                .orElseThrow(()->new AuthorNotFoundException("No author found"));
+        AuthorProjections authorProjections=authorRepository.findAuthorProjectionById(id);
+
+        if(authorProjections==null) {
+            throw new AuthorNotFoundException("No author found");
+        }
 
         return AuthorResponse.builder()
-                .total_books(author.getTotal_books())
-                .age(author.getAge())
-                .rating(author.getRating())
-                .name(author.getName())
-                .emailId(author.getEmailId())
+                .total_books(authorProjections.getTotal_books())
+                .age(authorProjections.getAge())
+                .rating(authorProjections.getRating())
+                .name(authorProjections.getName())
+                .emailId(authorProjections.getEmailId())
                 .build();
     }
 
