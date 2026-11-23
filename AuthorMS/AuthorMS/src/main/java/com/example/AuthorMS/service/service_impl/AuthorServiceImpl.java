@@ -105,8 +105,8 @@ public class AuthorServiceImpl implements AuthorService {
     @Override
     public PageResponse<?> getAllAuthors(int pageNo, int pageSize, String sortBy) {
         Pageable pageable= PageRequest.of(pageNo,pageSize, Sort.by(sortBy));
-        Page<Author> authorPage=authorRepository.findAll(pageable);
-        List<Author> authorList=authorPage.getContent();
+        Page<AuthorProjections> authorPage=authorRepository.findAllAuthor(pageable);
+        List<AuthorProjections> authorList=authorPage.getContent();
 
 
         List<AuthorResponse> authorResponseList=authorList.stream().
@@ -123,13 +123,13 @@ public class AuthorServiceImpl implements AuthorService {
                 .build();
     }
 
-    private AuthorResponse mapToAuthorResponse(Author author) {
+    private AuthorResponse mapToAuthorResponse(AuthorProjections authorProjections) {
         return AuthorResponse.builder()
-                .total_books(author.getTotal_books())
-                .rating(author.getRating())
-                .emailId(author.getEmailId())
-                .age(author.getAge())
-                .name(author.getName())
+                .total_books(authorProjections.getTotal_books())
+                .rating(authorProjections.getRating())
+                .emailId(authorProjections.getEmailId())
+                .age(authorProjections.getAge())
+                .name(authorProjections.getName())
                 .build();
     }
 }
