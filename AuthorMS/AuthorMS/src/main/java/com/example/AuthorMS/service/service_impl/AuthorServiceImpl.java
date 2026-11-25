@@ -5,6 +5,7 @@ import com.example.AuthorMS.dto.request.AuthorUpdate;
 import com.example.AuthorMS.dto.response.AuthorResponse;
 import com.example.AuthorMS.dto.response.PageResponse;
 import com.example.AuthorMS.exception_handling.AuthorNotFoundException;
+import com.example.AuthorMS.mapper.AuthorMapper;
 import com.example.AuthorMS.models.Author;
 import com.example.AuthorMS.projections.AuthorProjections;
 import com.example.AuthorMS.repository.AuthorRepository;
@@ -25,6 +26,7 @@ import java.util.stream.Collectors;
 public class AuthorServiceImpl implements AuthorService {
 
     private final AuthorRepository authorRepository;
+    private final AuthorMapper authorMapper;
 
     @Override
     public AuthorResponse add(AuthorRequest authorRequest) {
@@ -111,7 +113,7 @@ public class AuthorServiceImpl implements AuthorService {
 
         List<AuthorResponse> authorResponseList=authorList.stream().
                 map(author ->
-                   mapToAuthorResponse(author))
+                   authorMapper.AuthorProjectionToAuthorResponse(author))
                 .collect(Collectors.toList());
 
         return PageResponse.builder()
@@ -120,16 +122,6 @@ public class AuthorServiceImpl implements AuthorService {
                 .pageNumber(authorPage.getNumber())
                 .totalPages(authorPage.getTotalPages())
                 .pageSize(authorPage.getSize())
-                .build();
-    }
-
-    private AuthorResponse mapToAuthorResponse(AuthorProjections authorProjections) {
-        return AuthorResponse.builder()
-                .total_books(authorProjections.getTotal_books())
-                .rating(authorProjections.getRating())
-                .emailId(authorProjections.getEmailId())
-                .age(authorProjections.getAge())
-                .name(authorProjections.getName())
                 .build();
     }
 }
