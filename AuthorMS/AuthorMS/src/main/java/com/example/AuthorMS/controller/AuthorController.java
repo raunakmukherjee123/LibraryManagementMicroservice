@@ -1,5 +1,6 @@
 package com.example.AuthorMS.controller;
 
+import com.example.AuthorMS.dto.request.AuthorEmail;
 import com.example.AuthorMS.dto.request.AuthorRequest;
 import com.example.AuthorMS.dto.request.AuthorUpdate;
 import com.example.AuthorMS.dto.response.APIResponse;
@@ -110,9 +111,10 @@ public class AuthorController {
     }
 
     @PatchMapping("update/{id}")
-    public ResponseEntity<?> updateAuthorEmailById(@PathVariable("id") Integer id)
+    public ResponseEntity<?> updateAuthorEmailById(@PathVariable("id") Integer id, @RequestBody
+                                                   AuthorEmail authorEmail)
     {
-        authorService.updateEmailById(id);
+        authorService.updateEmailById(id,authorEmail);
 
         APIResponse apiResponse=APIResponse.builder()
                 .timestamp(Instant.now())

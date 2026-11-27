@@ -1,5 +1,6 @@
 package com.example.AuthorMS.service;
 
+import com.example.AuthorMS.dto.request.AuthorEmail;
 import com.example.AuthorMS.dto.request.AuthorRequest;
 import com.example.AuthorMS.dto.request.AuthorUpdate;
 import com.example.AuthorMS.dto.response.AuthorResponse;
@@ -16,5 +17,5 @@ public interface AuthorService {
 
     PageResponse<?> getAllAuthors(int pageNo, int pageSize, String sortBy);
 
-    void updateEmailById(Integer id);
+    void updateEmailById(Integer id, AuthorEmail authorEmail);
 }

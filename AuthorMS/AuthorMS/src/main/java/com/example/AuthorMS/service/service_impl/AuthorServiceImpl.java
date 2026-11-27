@@ -1,5 +1,6 @@
 package com.example.AuthorMS.service.service_impl;
 
+import com.example.AuthorMS.dto.request.AuthorEmail;
 import com.example.AuthorMS.dto.request.AuthorRequest;
 import com.example.AuthorMS.dto.request.AuthorUpdate;
 import com.example.AuthorMS.dto.response.AuthorResponse;
@@ -126,7 +127,15 @@ public class AuthorServiceImpl implements AuthorService {
     }
 
     @Override
-    public void updateEmailById(Integer id) {
+    public void updateEmailById(Integer id, AuthorEmail authorEmail) {
+        Author author=authorRepository.findById(id)
+                .orElseThrow(()->new AuthorNotFoundException("Author of id = "+id+" not found to be updated"));
 
+        if(authorEmail!=null)
+        {
+            author.setEmailId(authorEmail.getEmail());
+        }
+
+        authorRepository.save(author);
     }
 }
