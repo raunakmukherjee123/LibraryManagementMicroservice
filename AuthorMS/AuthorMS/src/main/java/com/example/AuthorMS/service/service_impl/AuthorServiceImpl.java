@@ -124,4 +124,9 @@ public class AuthorServiceImpl implements AuthorService {
                 .pageSize(authorPage.getSize())
                 .build();
     }
+
+    @Override
+    public void updateEmailById(Integer id) {
+
+    }
 }

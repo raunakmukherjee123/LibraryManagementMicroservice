@@ -108,4 +108,21 @@ public class AuthorController {
 
         return new ResponseEntity<>(apiResponse,HttpStatus.OK);
     }
+
+    @PatchMapping("update/{id}")
+    public ResponseEntity<?> updateAuthorEmailById(@PathVariable("id") Integer id)
+    {
+        authorService.updateEmailById(id);
+
+        APIResponse apiResponse=APIResponse.builder()
+                .timestamp(Instant.now())
+                .success(true)
+                .code(HttpStatus.OK)
+                .status(HttpStatus.OK.value())
+                .data("Email of author id = "+id+" has been updated")
+                .message("Email has been updated")
+                .build();
+
+        return new ResponseEntity<>(apiResponse,HttpStatus.OK);
+    }
 }

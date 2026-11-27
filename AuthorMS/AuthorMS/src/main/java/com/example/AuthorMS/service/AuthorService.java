@@ -15,4 +15,6 @@ public interface AuthorService {
     AuthorResponse updateById(AuthorUpdate authorUpdate, Integer id);
 
     PageResponse<?> getAllAuthors(int pageNo, int pageSize, String sortBy);
+
+    void updateEmailById(Integer id);
 }
